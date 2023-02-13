@@ -46,6 +46,8 @@ public class InitDB {
 
             memberRepository.saveAll(members);
         }
+
+
     }
 
 }

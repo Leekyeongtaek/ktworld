@@ -8,12 +8,13 @@ import javax.persistence.Id;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import my.com.ktworld.common.BaseTime;
 import my.com.ktworld.member.dto.request.MemberForm;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-public class Member {
+public class Member extends BaseTime {
 
     @Id
     @GeneratedValue
