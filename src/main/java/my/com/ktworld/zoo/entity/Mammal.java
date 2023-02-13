@@ -9,5 +9,7 @@ import lombok.Getter;
 @Entity
 public class Mammal extends Animal {
 
+    public void testA() {
 
+    }
 }

@@ -24,12 +24,15 @@ public abstract class Animal extends BaseTime {
     @Column(name = "animal_id")
     private Long id;
     private String name;
+    private String feature;
     private int age;
+    private int weight;
     private long price;
 
     @ManyToOne(fetch = LAZY)
     private Zookeeper zookeeper;
 
+    //todo 공통 추상 기능.
+    //todo 공통 기능. private, protected, public
 
-    //공통 메서드.
 }
