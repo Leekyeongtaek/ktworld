@@ -1,9 +1,12 @@
 package my.com.ktworld.zoo.entity;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +25,9 @@ public class Zookeeper extends BaseTime {
     private String name;
     private int age;
     private int salary;
+
+    @OneToMany(mappedBy = "zookeeper")
+    private List<Animal> animals = new ArrayList<>();
 
     public static Zookeeper createZookeeper(ZookeeperForm zookeeperForm) {
         Zookeeper zookeeper = new Zookeeper();
