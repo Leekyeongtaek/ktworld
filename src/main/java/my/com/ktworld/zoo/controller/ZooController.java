@@ -2,6 +2,7 @@ package my.com.ktworld.zoo.controller;
 
 import lombok.RequiredArgsConstructor;
 import my.com.ktworld.common.ApiResponse;
+import my.com.ktworld.zoo.dto.request.AnimalForm;
 import my.com.ktworld.zoo.dto.request.ZookeeperForm;
 import my.com.ktworld.zoo.service.ZooService;
 import org.springframework.http.HttpStatus;
@@ -30,5 +31,19 @@ public class ZooController {
         zooService.updateZookeeper(zookeeperForm);
         return new ResponseEntity<>(ApiResponse.createSuccessNoData(), HttpStatus.OK);
     }
+
+    @PostMapping("/animal")
+    public ResponseEntity<ApiResponse<?>> createAnimal(@RequestBody AnimalForm animalForm) {
+        zooService.createAnimal(animalForm);
+        return new ResponseEntity<>(ApiResponse.createSuccessNoData(), HttpStatus.OK);
+    }
+
+    @PutMapping("/animal")
+    public ResponseEntity<ApiResponse<?>> updateAnimal(@RequestBody AnimalForm animalForm) {
+        zooService.updateAnimal(animalForm);
+        return new ResponseEntity<>(ApiResponse.createSuccessNoData(), HttpStatus.OK);
+    }
+
+
 
 }
