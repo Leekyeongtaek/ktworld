@@ -7,10 +7,11 @@ import my.com.ktworld.common.ApiResponse;
 import my.com.ktworld.zoo.dto.request.AnimalForm;
 import my.com.ktworld.zoo.dto.request.ZookeeperForm;
 import my.com.ktworld.zoo.dto.response.AnimalDto;
+import my.com.ktworld.zoo.dto.response.ZookeeperDto;
 import my.com.ktworld.zoo.entity.Animal;
 import my.com.ktworld.zoo.entity.Zookeeper;
-import my.com.ktworld.zoo.repository.AnimalRepository;
-import my.com.ktworld.zoo.repository.ZookeeperRepository;
+import my.com.ktworld.zoo.repository.animal.AnimalRepository;
+import my.com.ktworld.zoo.repository.zookeeper.ZookeeperRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,6 +34,15 @@ public class ZooService {
         Optional<Zookeeper> zookeeper = zookeeperRepository.findById(zookeeperForm.getZookeeperId());
         if (zookeeper.isPresent()) {
             zookeeper.get().updateZookeeper(zookeeperForm);
+        } else {
+            throw new NoSuchElementException("해당하는 사육사 정보를 찾을 수 없습니다.");
+        }
+    }
+
+    public ApiResponse<ZookeeperDto> selectZookeeper(Long zookeeperId) {
+        Optional<Zookeeper> zookeeper = zookeeperRepository.findById(zookeeperId);
+        if (zookeeper.isPresent()) {
+            return ApiResponse.createSuccess(ZookeeperDto.toDto(zookeeper.get()));
         } else {
             throw new NoSuchElementException("해당하는 사육사 정보를 찾을 수 없습니다.");
         }

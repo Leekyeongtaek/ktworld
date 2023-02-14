@@ -5,6 +5,7 @@ import my.com.ktworld.common.ApiResponse;
 import my.com.ktworld.zoo.dto.request.AnimalForm;
 import my.com.ktworld.zoo.dto.request.ZookeeperForm;
 import my.com.ktworld.zoo.dto.response.AnimalDto;
+import my.com.ktworld.zoo.dto.response.ZookeeperDto;
 import my.com.ktworld.zoo.service.ZooService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +34,12 @@ public class ZooController {
     public ResponseEntity<ApiResponse<?>> updateZookeeper(@RequestBody ZookeeperForm zookeeperForm) {
         zooService.updateZookeeper(zookeeperForm);
         return new ResponseEntity<>(ApiResponse.createSuccessNoData(), HttpStatus.OK);
+    }
+
+    @GetMapping("/zookeeper/{zookeeper_id}")
+    public ResponseEntity<ApiResponse<ZookeeperDto>> selectZookeeper(@PathVariable(value = "zookeeper_id") Long zookeeperId) {
+        ApiResponse<ZookeeperDto> zookeeperDtoApiResponse = zooService.selectZookeeper(zookeeperId);
+        return new ResponseEntity<>(zookeeperDtoApiResponse, HttpStatus.OK);
     }
 
     @PostMapping("/animal")
