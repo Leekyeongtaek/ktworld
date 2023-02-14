@@ -4,9 +4,12 @@ import lombok.RequiredArgsConstructor;
 import my.com.ktworld.common.ApiResponse;
 import my.com.ktworld.zoo.dto.request.AnimalForm;
 import my.com.ktworld.zoo.dto.request.ZookeeperForm;
+import my.com.ktworld.zoo.dto.response.AnimalDto;
 import my.com.ktworld.zoo.service.ZooService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -44,6 +47,11 @@ public class ZooController {
         return new ResponseEntity<>(ApiResponse.createSuccessNoData(), HttpStatus.OK);
     }
 
+    @GetMapping("/animal/{animal_id}")
+    public ResponseEntity<ApiResponse<AnimalDto>> selectAnimal(@PathVariable(value = "animal_id") Long animalId) {
+        ApiResponse<AnimalDto> animalDtoApiResponse = zooService.selectAnimal(animalId);
+        return new ResponseEntity<>(animalDtoApiResponse, HttpStatus.OK);
+    }
 
 
 }

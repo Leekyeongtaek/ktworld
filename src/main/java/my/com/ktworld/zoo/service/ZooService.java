@@ -3,8 +3,10 @@ package my.com.ktworld.zoo.service;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import my.com.ktworld.common.ApiResponse;
 import my.com.ktworld.zoo.dto.request.AnimalForm;
 import my.com.ktworld.zoo.dto.request.ZookeeperForm;
+import my.com.ktworld.zoo.dto.response.AnimalDto;
 import my.com.ktworld.zoo.entity.Animal;
 import my.com.ktworld.zoo.entity.Zookeeper;
 import my.com.ktworld.zoo.repository.AnimalRepository;
@@ -47,6 +49,15 @@ public class ZooService {
         Optional<Animal> animal = animalRepository.findById(animalForm.getAnimalId());
         if (animal.isPresent()) {
             animal.get().updateAnimal(animalForm);
+        } else {
+            throw new NoSuchElementException("해당하는 동물 정보를 찾을 수 없습니다.");
+        }
+    }
+
+    public ApiResponse<AnimalDto> selectAnimal(Long animalId) {
+        Optional<Animal> animal = animalRepository.findById(animalId);
+        if (animal.isPresent()) {
+            return ApiResponse.createSuccess(AnimalDto.toDto(animal.get()));
         } else {
             throw new NoSuchElementException("해당하는 동물 정보를 찾을 수 없습니다.");
         }

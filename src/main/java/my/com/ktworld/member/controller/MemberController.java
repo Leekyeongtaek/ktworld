@@ -39,8 +39,8 @@ public class MemberController {
         return new ResponseEntity<>(ApiResponse.createSuccessNoData(), HttpStatus.OK);
     }
 
-    @GetMapping("/{memberId}")
-    public ResponseEntity<ApiResponse<MemberDto>> selectMember(@PathVariable long memberId) {
+    @GetMapping("/{member_id}")
+    public ResponseEntity<ApiResponse<MemberDto>> selectMember(@PathVariable(value = "member_id") long memberId) {
         return new ResponseEntity<>(memberService.selectMember(memberId), HttpStatus.OK);
     }
 
