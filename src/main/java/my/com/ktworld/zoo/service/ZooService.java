@@ -1,11 +1,11 @@
 package my.com.ktworld.zoo.service;
 
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import my.com.ktworld.common.ApiResponse;
 import my.com.ktworld.zoo.dto.request.AnimalForm;
+import my.com.ktworld.zoo.dto.request.AnimalSearchCondition;
 import my.com.ktworld.zoo.dto.request.ZookeeperForm;
 import my.com.ktworld.zoo.dto.request.ZookeeperSearchCondition;
 import my.com.ktworld.zoo.dto.response.AnimalDto;
@@ -43,6 +43,11 @@ public class ZooService {
         }
     }
 
+    public ApiResponse<Page<ZookeeperDto>> searchZookeepers(ZookeeperSearchCondition condition, Pageable pageable) {
+        Page<ZookeeperDto> zookeeperDtos = zookeeperRepository.searchZookeepers(condition, pageable);
+        return ApiResponse.createSuccess(zookeeperDtos);
+    }
+
     public ApiResponse<ZookeeperDto> selectZookeeper(Long zookeeperId) {
         Optional<Zookeeper> zookeeper = zookeeperRepository.findById(zookeeperId);
         if (zookeeper.isPresent()) {
@@ -50,11 +55,6 @@ public class ZooService {
         } else {
             throw new NoSuchElementException("해당하는 사육사 정보를 찾을 수 없습니다.");
         }
-    }
-
-    public ApiResponse<Page<ZookeeperDto>> searchZookeepers(ZookeeperSearchCondition condition, Pageable pageable) {
-        Page<ZookeeperDto> zookeeperDtos = zookeeperRepository.searchZookeepers(condition, pageable);
-        return ApiResponse.createSuccess(zookeeperDtos);
     }
 
     @Transactional
@@ -71,6 +71,11 @@ public class ZooService {
         } else {
             throw new NoSuchElementException("해당하는 동물 정보를 찾을 수 없습니다.");
         }
+    }
+
+    public ApiResponse<Page<AnimalDto>> searchAnimals(AnimalSearchCondition condition, Pageable pageable) {
+        Page<AnimalDto> animalDtos = animalRepository.searchAnimals(condition, pageable);
+        return ApiResponse.createSuccess(animalDtos);
     }
 
     public ApiResponse<AnimalDto> selectAnimal(Long animalId) {

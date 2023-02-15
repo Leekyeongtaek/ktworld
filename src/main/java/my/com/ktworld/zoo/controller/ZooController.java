@@ -1,8 +1,11 @@
 package my.com.ktworld.zoo.controller;
 
+import static org.springframework.http.HttpStatus.OK;
+
 import lombok.RequiredArgsConstructor;
 import my.com.ktworld.common.ApiResponse;
 import my.com.ktworld.zoo.dto.request.AnimalForm;
+import my.com.ktworld.zoo.dto.request.AnimalSearchCondition;
 import my.com.ktworld.zoo.dto.request.ZookeeperForm;
 import my.com.ktworld.zoo.dto.request.ZookeeperSearchCondition;
 import my.com.ktworld.zoo.dto.response.AnimalDto;
@@ -10,7 +13,6 @@ import my.com.ktworld.zoo.dto.response.ZookeeperDto;
 import my.com.ktworld.zoo.service.ZooService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,43 +32,48 @@ public class ZooController {
     @PostMapping("/zookeepers")
     public ResponseEntity<ApiResponse<?>> createZookeeper(@RequestBody ZookeeperForm zookeeperForm) {
         zooService.createZookeeper(zookeeperForm);
-        return new ResponseEntity<>(ApiResponse.createSuccessNoData(), HttpStatus.OK);
+        return new ResponseEntity<>(ApiResponse.createSuccessNoData(), OK);
     }
 
     @PutMapping("/zookeepers")
     public ResponseEntity<ApiResponse<?>> updateZookeeper(@RequestBody ZookeeperForm zookeeperForm) {
         zooService.updateZookeeper(zookeeperForm);
-        return new ResponseEntity<>(ApiResponse.createSuccessNoData(), HttpStatus.OK);
+        return new ResponseEntity<>(ApiResponse.createSuccessNoData(), OK);
+    }
+
+    @GetMapping("/zookeepers")
+    public ResponseEntity<ApiResponse<Page<ZookeeperDto>>> searchZookeepers(ZookeeperSearchCondition condition, Pageable pageable) {
+        return new ResponseEntity<>(zooService.searchZookeepers(condition, pageable), OK);
     }
 
     @GetMapping("/zookeepers/{zookeeper_id}")
     public ResponseEntity<ApiResponse<ZookeeperDto>> selectZookeeper(@PathVariable(value = "zookeeper_id") Long zookeeperId) {
         ApiResponse<ZookeeperDto> zookeeperDtoApiResponse = zooService.selectZookeeper(zookeeperId);
-        return new ResponseEntity<>(zookeeperDtoApiResponse, HttpStatus.OK);
-    }
-
-    @GetMapping("/zookeepers")
-    public ResponseEntity<ApiResponse<Page<ZookeeperDto>>> searchZookeepers(ZookeeperSearchCondition condition, Pageable pageable) {
-        return new ResponseEntity<>(zooService.searchZookeepers(condition, pageable), HttpStatus.OK);
+        return new ResponseEntity<>(zookeeperDtoApiResponse, OK);
     }
 
     @PostMapping("/animals")
     public ResponseEntity<ApiResponse<?>> createAnimal(@RequestBody AnimalForm animalForm) {
         zooService.createAnimal(animalForm);
-        return new ResponseEntity<>(ApiResponse.createSuccessNoData(), HttpStatus.OK);
+        return new ResponseEntity<>(ApiResponse.createSuccessNoData(), OK);
     }
 
     @PutMapping("/animals")
     public ResponseEntity<ApiResponse<?>> updateAnimal(@RequestBody AnimalForm animalForm) {
         zooService.updateAnimal(animalForm);
-        return new ResponseEntity<>(ApiResponse.createSuccessNoData(), HttpStatus.OK);
+        return new ResponseEntity<>(ApiResponse.createSuccessNoData(), OK);
     }
+
+    @GetMapping("/animals")
+    public ResponseEntity<ApiResponse<Page<AnimalDto>>> searchAnimals(AnimalSearchCondition condition, Pageable pageable) {
+        return new ResponseEntity<>(zooService.searchAnimals(condition, pageable), OK);
+    }
+
 
     @GetMapping("/animals/{animal_id}")
     public ResponseEntity<ApiResponse<AnimalDto>> selectAnimal(@PathVariable(value = "animal_id") Long animalId) {
         ApiResponse<AnimalDto> animalDtoApiResponse = zooService.selectAnimal(animalId);
-        return new ResponseEntity<>(animalDtoApiResponse, HttpStatus.OK);
+        return new ResponseEntity<>(animalDtoApiResponse, OK);
     }
-
 
 }
