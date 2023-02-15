@@ -1,17 +1,21 @@
 package my.com.ktworld.zoo.service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import my.com.ktworld.common.ApiResponse;
 import my.com.ktworld.zoo.dto.request.AnimalForm;
 import my.com.ktworld.zoo.dto.request.ZookeeperForm;
+import my.com.ktworld.zoo.dto.request.ZookeeperSearchCondition;
 import my.com.ktworld.zoo.dto.response.AnimalDto;
 import my.com.ktworld.zoo.dto.response.ZookeeperDto;
 import my.com.ktworld.zoo.entity.Animal;
 import my.com.ktworld.zoo.entity.Zookeeper;
 import my.com.ktworld.zoo.repository.animal.AnimalRepository;
 import my.com.ktworld.zoo.repository.zookeeper.ZookeeperRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,6 +50,11 @@ public class ZooService {
         } else {
             throw new NoSuchElementException("해당하는 사육사 정보를 찾을 수 없습니다.");
         }
+    }
+
+    public ApiResponse<Page<ZookeeperDto>> searchZookeepers(ZookeeperSearchCondition condition, Pageable pageable) {
+        Page<ZookeeperDto> zookeeperDtos = zookeeperRepository.searchZookeepers(condition, pageable);
+        return ApiResponse.createSuccess(zookeeperDtos);
     }
 
     @Transactional

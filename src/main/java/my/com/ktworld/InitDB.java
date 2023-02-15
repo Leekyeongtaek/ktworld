@@ -9,6 +9,9 @@ import my.com.ktworld.member.dto.request.AddressForm;
 import my.com.ktworld.member.dto.request.MemberForm;
 import my.com.ktworld.member.entity.Member;
 import my.com.ktworld.member.repository.MemberRepository;
+import my.com.ktworld.zoo.dto.request.ZookeeperForm;
+import my.com.ktworld.zoo.entity.Zookeeper;
+import my.com.ktworld.zoo.repository.zookeeper.ZookeeperRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +25,7 @@ public class InitDB {
     @PostConstruct
     public void init() {
         initService.createMembers();
+        initService.createZookeepers();
     }
 
     @Component
@@ -30,14 +34,15 @@ public class InitDB {
     public static class InitService {
 
         private final MemberRepository memberRepository;
+        private final ZookeeperRepository zookeeperRepository;
 
         public void createMembers() {
             List<Member> members = new ArrayList<>();
-            for (int i = 0; i < 100; i++) {
+            for (int i = 1; i < 101; i++) {
                 MemberForm memberForm = new MemberForm();
-                memberForm.setUserId("userId" + (i+1));
+                memberForm.setUserId("userId" + i);
                 memberForm.setPassword("1234");
-                memberForm.setEmail("email" + (i+1) + "naver.com");
+                memberForm.setEmail("email" + i + "naver.com");
                 memberForm.setBirthDate("900520");
                 memberForm.setAddress(new AddressForm("서울 특별시", "관악구"));
                 memberForm.setPhoneNumber("01012345678");
@@ -47,6 +52,17 @@ public class InitDB {
             memberRepository.saveAll(members);
         }
 
+        public void createZookeepers() {
+            List<Zookeeper> zookeepers = new ArrayList<>();
+            for (int i = 1; i < 101; i++) {
+                ZookeeperForm zookeeperForm = new ZookeeperForm();
+                zookeeperForm.setName("사육사" + i);
+                zookeeperForm.setAge(i);
+                zookeeperForm.setSalary(10000 + i);
+                zookeepers.add(Zookeeper.createZookeeper(zookeeperForm));
+            }
+            zookeeperRepository.saveAll(zookeepers);
+        }
 
     }
 
