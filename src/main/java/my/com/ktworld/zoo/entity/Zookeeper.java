@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import my.com.ktworld.common.BaseTime;
 import my.com.ktworld.zoo.dto.request.ZookeeperForm;
+import my.com.ktworld.zoo.dto.request.ZookeeperSave;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -29,11 +30,11 @@ public class Zookeeper extends BaseTime {
     @OneToMany(mappedBy = "zookeeper")
     private List<Animal> animals = new ArrayList<>();
 
-    public static Zookeeper createZookeeper(ZookeeperForm zookeeperForm) {
+    public static Zookeeper createZookeeper(ZookeeperSave zookeeperSave) {
         Zookeeper zookeeper = new Zookeeper();
-        zookeeper.name = zookeeperForm.getName();
-        zookeeper.salary = zookeeperForm.getSalary();
-        zookeeper.age = zookeeperForm.getAge();
+        zookeeper.name = zookeeperSave.getName();
+        zookeeper.salary = zookeeperSave.getSalary();
+        zookeeper.age = zookeeperSave.getAge();
 
         return zookeeper;
     }

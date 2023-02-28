@@ -28,15 +28,17 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping
-    public ResponseEntity<ApiResponse<?>> createMember(@RequestBody MemberForm memberForm) {
+    public ResponseEntity<?> createMember(@RequestBody MemberForm memberForm) {
         memberService.createMember(memberForm);
-        return new ResponseEntity<>(ApiResponse.createSuccessNoData(), HttpStatus.OK);
+//        ApiResponse.createSuccessNoData();
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping
     public ResponseEntity<ApiResponse<?>> updateMember(@RequestBody MemberForm memberForm) {
         memberService.updateMember(memberForm);
-        return new ResponseEntity<>(ApiResponse.createSuccessNoData(), HttpStatus.OK);
+        //ApiResponse.createSuccessNoData()
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/{member_id}")

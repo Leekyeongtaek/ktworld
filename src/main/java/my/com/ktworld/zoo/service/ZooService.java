@@ -7,6 +7,7 @@ import my.com.ktworld.common.ApiResponse;
 import my.com.ktworld.zoo.dto.request.AnimalForm;
 import my.com.ktworld.zoo.dto.request.AnimalSearchCondition;
 import my.com.ktworld.zoo.dto.request.ZookeeperForm;
+import my.com.ktworld.zoo.dto.request.ZookeeperSave;
 import my.com.ktworld.zoo.dto.request.ZookeeperSearchCondition;
 import my.com.ktworld.zoo.dto.response.AnimalDto;
 import my.com.ktworld.zoo.dto.response.ZookeeperDto;
@@ -28,8 +29,8 @@ public class ZooService {
     private final AnimalRepository animalRepository;
 
     @Transactional
-    public void createZookeeper(ZookeeperForm zookeeperForm) {
-        Zookeeper zookeeper = Zookeeper.createZookeeper(zookeeperForm);
+    public void createZookeeper(ZookeeperSave zookeeperSave) {
+        Zookeeper zookeeper = Zookeeper.createZookeeper(zookeeperSave);
         zookeeperRepository.save(zookeeper);
     }
 
@@ -45,13 +46,15 @@ public class ZooService {
 
     public ApiResponse<Page<ZookeeperDto>> searchZookeepers(ZookeeperSearchCondition condition, Pageable pageable) {
         Page<ZookeeperDto> zookeeperDtos = zookeeperRepository.searchZookeepers(condition, pageable);
-        return ApiResponse.createSuccess(zookeeperDtos);
+//        return ApiResponse.createSuccess(zookeeperDtos);
+        return null;
     }
 
     public ApiResponse<ZookeeperDto> selectZookeeper(Long zookeeperId) {
         Optional<Zookeeper> zookeeper = zookeeperRepository.findById(zookeeperId);
         if (zookeeper.isPresent()) {
-            return ApiResponse.createSuccess(ZookeeperDto.toDto(zookeeper.get()));
+//            return ApiResponse.createSuccess(ZookeeperDto.toDto(zookeeper.get()));
+            return null;
         } else {
             throw new NoSuchElementException("해당하는 사육사 정보를 찾을 수 없습니다.");
         }
@@ -75,13 +78,15 @@ public class ZooService {
 
     public ApiResponse<Page<AnimalDto>> searchAnimals(AnimalSearchCondition condition, Pageable pageable) {
         Page<AnimalDto> animalDtos = animalRepository.searchAnimals(condition, pageable);
-        return ApiResponse.createSuccess(animalDtos);
+//        return ApiResponse.createSuccess(animalDtos);
+        return null;
     }
 
     public ApiResponse<AnimalDto> selectAnimal(Long animalId) {
         Optional<Animal> animal = animalRepository.findById(animalId);
         if (animal.isPresent()) {
-            return ApiResponse.createSuccess(AnimalDto.toDto(animal.get()));
+//            return ApiResponse.createSuccess(AnimalDto.toDto(animal.get()));
+            return null;
         } else {
             throw new NoSuchElementException("해당하는 동물 정보를 찾을 수 없습니다.");
         }

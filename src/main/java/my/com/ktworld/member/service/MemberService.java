@@ -39,7 +39,8 @@ public class MemberService {
     public ApiResponse<MemberDto> selectMember(Long memberId) {
         Optional<Member> member = memberRepository.findById(memberId);
         if (member.isPresent()) {
-            return ApiResponse.createSuccess(MemberDto.toDto(member.get()));
+//            return ApiResponse.createSuccess(MemberDto.toDto(member.get()))
+                return null;
         } else {
             throw new NoSuchElementException("해당하는 회원 정보를 찾을 수 없습니다.");
         }

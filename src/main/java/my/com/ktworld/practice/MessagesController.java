@@ -21,7 +21,6 @@ public class MessagesController {
         log.info("메시지={}", hello);
         modelAndView.addObject("hello", hello);
         return "/hello";
-
     }
 
 }
